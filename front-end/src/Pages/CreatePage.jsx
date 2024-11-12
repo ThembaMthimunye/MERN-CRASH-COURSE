@@ -1,5 +1,8 @@
 import { useState, React } from "react";
 import { useProductStore } from "../../Store/product";
+import { MdOutlineBroadcastOnPersonal } from "react-icons/md";
+import { ToastContainer, toast } from 'react-toastify';
+// import { useToast } from '@chakra-ui/react';
 
 const CreatePage = () => {
   const [newProduct, setNewProduct] = useState({
@@ -7,22 +10,27 @@ const CreatePage = () => {
     price: "",
     image: "",
   });
-  const {createProduct}=useProductStore()
-  const handleProduct = async() => {
-    const {success,message}=await createProduct(newProduct)
-    console.log("Success",success)
-    console.log("Message",message)
+  const { createProduct } = useProductStore();
+
+//   const toast = useToast();/
+  const handleProduct = async () => {
+    const { success, message } = await createProduct(newProduct);
+    console.log("Success", success);
+    console.log("Message", message);
     console.log(newProduct);
-  };
+    setNewProduct({  name: "",price: "", image: ""});
+    };
   return (
     <div className="flex flex-col justify-center items-center space-y-4 mt-14">
-      <input className="border-blue-500 border rounded-md w-[40rem] h-10"
+      <input
+        className="border-blue-500 border rounded-md w-[40rem] h-10"
         placeholder="Product Name"
         name="Name"
         value={newProduct.name}
         onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
       />
-      <input className="border-blue-500 border rounded-md w-[40rem] h-10"  
+      <input
+        className="border-blue-500 border rounded-md w-[40rem] h-10"
         placeholder="Product Price"
         name="Price"
         value={newProduct.price}
@@ -30,7 +38,8 @@ const CreatePage = () => {
           setNewProduct({ ...newProduct, price: e.target.value })
         }
       />
-      <input className="border-blue-500 border rounded-md w-[40rem] h-10"
+      <input
+        className="border-blue-500 border rounded-md w-[40rem] h-10"
         placeholder="Image URL"
         name="image"
         value={newProduct.image}
@@ -38,7 +47,12 @@ const CreatePage = () => {
           setNewProduct({ ...newProduct, image: e.target.value })
         }
       />
-      <button className="border-blue-500 border px-4 py-1 rounded-md w-[40rem] h-10" onClick={handleProduct}>Submit Product</button>
+      <button
+        className="border-blue-500 border px-4 py-1 rounded-md w-[40rem] h-10"
+        onClick={handleProduct}
+      >
+        Submit Product
+      </button>
     </div>
   );
 };
